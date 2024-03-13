@@ -32,6 +32,8 @@ The output of our algorithm is a composite image $I_c$ and associated intrinsic 
 
 ## Background
 
+**NOTE** If you are viewing this via GitHub, switch to the [PDF](README.pdf) for clean math typesetting.
+
 Consider a point $$p_\pi=\begin{matrix}[u&v&1]^T\end{matrix} $$ in the plane $\pi$. Perspectively we can express $p_\pi$  in terms of camera $i$ as
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
 where equality is defined up to scale. Here
