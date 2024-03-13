@@ -1,3 +1,6 @@
+
+**NOTE** If you are viewing this via GitHub, switch to the [PDF](README.pdf) for clean math typesetting.
+
 # image-stitching
 
 The code in this repository demonstrates stitching of images captured by cameras observing a **planar target**. We analytically derive homographies by assuming the camera pose wrt. to the target are known.
