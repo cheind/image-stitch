@@ -13,15 +13,17 @@ Image stitching is the process of fusioning multiple overlapping images to produ
 ### Assumptions
 
 We assume to be given
- 1. $N$ images of a planar target residing in plane $\pi$ located $T^w_{\pi}$ wrt. to a world frame $w$,
- 1. non-linearities are removed from each image $I_n$,
- 1. intrinsic camera matrices $K_n$ and view matrices $T^n_w$
+
+1. $N$ images of a planar target residing in plane $\pi$ located $T^w_{\pi}$ wrt. to a world frame $w$,
+1. non-linearities are removed from each image $I_n$,
+1. intrinsic camera matrices $K_n$ and view matrices $T^n_w$
 
 ### Outputs
 
 The output of our algorithm is a composite image $I_c$ and associated intrinsic matrix $K_c$. Since all objects, cameras and the target plane, are related through homographies, the image $I_c$ can be formed wrt. to any of the object coordinate systems. Here we look at two special cases
- 1. Stitching is performed wrt. a chosen reference camera $r$
- 1. Stitching is performed wrt. to virtual camera whose image plane aligns with $\pi$.
+
+1. Stitching is performed wrt. a chosen reference camera $r$
+1. Stitching is performed wrt. to virtual camera whose image plane aligns with $\pi$.
  
  The first option stiches the images alongside of $I_r$ in the viewport of camera $r$. The second option fusions the images in a virtual camera whose image plane corresponds to $\pi$. This results in an image having pixel resolution of $R=\frac{px}{m}$ and allows for image based measurements.
 
@@ -31,8 +33,8 @@ Consider a point $$p_\pi=\begin{matrix}[u&v&1]^T\end{matrix} $$ in the plane $\p
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
 where equality is defined up to scale. Here
 $$
-U=\begin{bmatrix}
-
+U=
+\begin{bmatrix}
     1 & 0 & 0 \\
     0 & 1 & 0 \\
     0 & 0 & 0 \\
@@ -41,20 +43,21 @@ U=\begin{bmatrix}
 $$
 lifts $p_\pi$ from UV plane coordinates to homogeneous XYZ world space, $T^i_w \in \mathcal{R}^{4x4}$ is the view transform of camera $i$ wrt. world, likewise $T^w_\pi \in \mathcal{R}^{4x4}$ is the location of the plane in world, $K_i \in \mathcal{R}^{3x3}$ is the intrinsic camera matrix and 
 $$ 
-D=\begin{bmatrix}
+D=
+\begin{bmatrix}
     1 & 0 & 0 & 0\\
     0 & 1 & 0 & 0\\
-    0 & 0 & 1 & 0\\
+    0 & 0 & 1 & 0
 \end{bmatrix}
 $$
 drops the homogeneous fourth coordinate.
 
 When we map the same point $p_\pi$ to camera $i$ and $j$ we get two perspective relations
 $$
-\begin{align}
+\begin{aligned}
     p_i &= K_i D T^i_w T^w_\pi U p_\pi \\
-    p_j &= K_j D T^j_w T^w_\pi U p_\pi. \\
-\end{align}
+    p_j &= K_j D T^j_w T^w_\pi U p_\pi.
+\end{aligned}
 $$
 
 The term $(K_i D T^i_w T^w_\pi U) = L^i_\pi$ represents an invertible 3x3 matrix. This follows from the fact that a) each individual matrix has rank 3 and b) the rank of a matrix product is related to the rank of the individual matrices and c) that a square matrix is invertible if and only if it has full rank. See [rank properties](https://en.wikipedia.org/wiki/Rank_(linear_algebra)#Properties) for details.
@@ -76,6 +79,7 @@ to be the homography between camera $j$ and $i$.
 ## Algorithm
 
 The (simplified) stitching algorithm in this repository works as follows.
+ 
  1. Choose reference camera intrinsics $K_r$ and view matrix $T^r_w$.
  1. Compute the homography $H_i^r$ for each camera $i$.
  1. Find the extent of the output image $I_c$ by computing the bounding box of image corners transformed by $H_i^r.$
@@ -95,23 +99,22 @@ In order to stitch in camera $k$ let $T^r_w := T^k_w$ and $K_r:=K_k$ and run the
 
 When stitching in the target plane, we construct a virtual camera whose image plane aligns with plane $\pi$. In particular we need to construct a suitable view matrix $T^r_w$ and intrinsic matrix $K_r$.
 
-
 Let $T^r_w =  (T_\pi^w T^\pi_r)^{-1}$ with
 $$
-T^\pi_r=\begin{bmatrix}
-
+T^\pi_r=
+\begin{bmatrix}
     1 & 0 & 0 &  0 \\
     0 & 1 & 0 &  0 \\
     0 & 0 & 1 & -1 \\
-    0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 1
 \end{bmatrix},
 $$
 being the virtual camera frame with respect to plane $\pi$. Here we have chosen the image axes $x,y$ aligned to $u,v$. The camera is offsetted 1 units in negative z, so that the cameras image plane aligns with $\pi$. Note, $z=-1$ and $z=1$ are both possible, but one will give a horizontally flipped image. Which one to choose depends on how the coordinate frame $\pi$ is defined. The flipped image occurs because of a 'see-through' effect.
 
 $K_r$ becomes a pure scaling matrix to account or metric to pixel conversion
 $$
-K_r=\begin{bmatrix}
-
+K_r=
+\begin{bmatrix}
     R & 0 & 0 \\
     0 & R & 0 \\
     0 & 0 & 1
@@ -124,6 +127,7 @@ where $R=\frac{px}{m}$ is a user defined pixel per meter ratio. Note, here we us
 This repository implements a simple blending strategy that gives central pixels more weight. 
 
 This strategy is justified for two reasons:
+
  1. When $T^i_\pi$ is computed from calibration patterns the camera position is typically chosen such that the calibration pattern appears central in the camera image. The pattern is often of finite (small) size, leading to registration errors that amplify towards the image borders.
  1. The observed brightness of real lenses decreases towards the edges of an image decreases due to an effect called lens vignetting.
 
