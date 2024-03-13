@@ -27,9 +27,9 @@ The output of our algorithm is a composite image $I_c$ and associated intrinsic 
 
 ## Background
 
-$\newcommand{\irow}[1]{% inline row vector
+$$\newcommand{\irow}[1]{% inline row vector
   \begin{matrix}[#1]^T\end{matrix}%
-}$
+}$$
 
 Consider a point $p_\pi=\irow{u&v&1}$ living in the plane $\pi$. Perspectively we can express $p_\pi$  in terms of camera $i$ as
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
