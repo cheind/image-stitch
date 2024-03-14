@@ -27,7 +27,10 @@ The code provided is for demonstration purposes only. It is limited to a scenari
 python stitch.py -r 2
 ```
 
-![](etc/stitch-cam3.png)
+<p align="center" width="100%">
+<img src="etc/stitch-cam3.png" />
+</p>
+
 
 ```shell
 # Stitch in plane pi using px/m of 500
