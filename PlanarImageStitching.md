@@ -12,15 +12,15 @@ comment: "pandoc -f markdown+tex_math_dollars+yaml_metadata_block+implicit_figur
 
 Image stitching is the process of fusioning multiple overlapping images to produce a composite image. Depending on use case, the resulting image is formed on a planar, cylindrical or spherical canvas. 
 
-The focus of this project is the planar mode, also called scan mode, which requires the target to be sufficiently flat (i.e images captured by a sattelite). In this scenario the cameras can be translated and rotated arbitrarily. The latter two are constrained to cameras sharing a common origin but rotated arbitrarily. The resulting image is usually viewed interactively to avoid severe distortion.
+The latter two are constrained to cameras sharing a common origin but rotated arbitrarily. The resulting image is usually viewed interactively to avoid severe distortion. The focus of this project is the planar mode, also called scan mode, which requires the target to be sufficiently flat (i.e images captured by a sattelite). In this scenario the cameras can be translated and rotated arbitrarily.
 
 # Assumptions
 
 We assume to be given
 
-1. $N$ images of a planar target residing in plane $\pi$ located $T^w_{\pi}$ wrt. to a world frame $w$,
+1. $N$ images of a planar target residing in plane $\pi$ located $T^w_{\pi}$ wrt.  a world frame $w$,
 1. non-linearities are removed from each image $I_n$,
-1. intrinsic camera matrices $K_n$ and view matrices $T^n_w$
+1. and intrinsic camera matrices $K_n$ and view matrices $T^n_w$.
 
 # Outputs
 
@@ -32,8 +32,6 @@ The output of our algorithm is a composite image $I_c$ and associated intrinsic 
  The first option stiches the images alongside of $I_r$ in the viewport of camera $r$. The second option fusions the images in a virtual camera whose image plane corresponds to $\pi$. This results in an image having pixel resolution of $R=\frac{px}{m}$ and allows for image based measurements.
 
 # Background
-
-**NOTE** If you are viewing this via GitHub, switch to the [PDF](README.pdf) for clean math typesetting.
 
 Consider a point $$p_\pi=\begin{matrix}[u&v&1]^T\end{matrix} $$ in the plane $\pi$. Perspectively we can express $p_\pi$  in terms of camera $i$ as
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
@@ -81,6 +79,11 @@ $$
     H_j^i = L^i_\pi L^\pi_j \in \mathcal{R}^{3x3},
 $$
 to be the homography between camera $j$ and $i$.
+
+The left side (a) of the following drawing shows the derivation, while (b)
+shows the case when $p_i$ gets mapped to point $p_\pi$ which lies behind the camera. This may cause issues when computing the bounds of $I_i$ in $I_j$ from transforming its corners via $H_j^i$. However, warping works usually fine as its implementation of depends on the inverse of $H_j^i$.
+
+![](etc/imagestitch-homography.png)
 
 # Algorithm
 
