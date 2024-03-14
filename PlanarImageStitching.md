@@ -26,7 +26,7 @@ We assume to be given
 
 The output of our algorithm is a composite image $I_c$ and associated intrinsic matrix $K_c$. Since all objects, cameras and the target plane, are related through homographies, the image $I_c$ can be formed wrt. to any of the object coordinate systems. Here we look at two special cases
 
-1. Stitching is performed wrt. to a chosen reference camera $r$
+1. Stitching is performed wrt. to a chosen reference camera $r$.
 1. Stitching is performed wrt. to virtual camera whose image plane aligns with $\pi$.
  
  The first option stiches the images alongside of $I_r$ in the viewport of camera $r$. The second option fusions the images in a virtual camera whose image plane corresponds to $\pi$. This results in an image having pixel resolution of $R=\frac{px}{m}$ and allows for image based measurements.
