@@ -4,11 +4,15 @@ The code in this repository demonstrates stitching of images captured by cameras
 
 The following image shows views stitched in the green reference camera frame. 
 
-![](etc/stitch-cam3.png)
+<div style="text-align:center">
+<img src="etc/stitch-cam3.png" />
+</div>
 
-The following image shows the same scene stitched in a virtual camera whose image plane aligns with the ground plane, having a pixel resolution of 500px/
+The following image shows the same scene stitched in a virtual camera whose image plane aligns with the ground plane, having a pixel resolution of 500px.
 
-![](etc/stitch-pi-500.png)
+<div style="text-align:center">
+<img src="etc/stitch-pi-500.png" />
+</div>
 
 Both images exhibit ghosting artefacts caused by blending moving objects and warping objects that violate the in-target-plane assumption. 
 
