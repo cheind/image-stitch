@@ -81,7 +81,7 @@ $$
 to be the homography between camera $j$ and $i$.
 
 In the following figure, the left side (a) illustrates the derivation while (b)
-shows the case when $p_i$ gets mapped to point $p_\pi$ which lies behind the camera. This may cause issues when computing the bounds of $I_i$ in $I_j$ from transforming its corners via $H_j^i$. However, warping works usually fine as its implementation of depends on the inverse of $H_j^i$.
+shows the case when $p_i$ gets mapped to point $p_\pi$ which lies behind the camera. This may cause issues when computing the bounds of $I_i$ in $I_j$ from transforming its corners via $H_j^i$. However, warping works usually fine as it is usually implemented using the inverse of $H_j^i$.
 
 ![](etc/imagestitch.svg)
 
