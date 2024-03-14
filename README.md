@@ -1,8 +1,6 @@
 # Planar Image Stitching
 
-The code in this repository demonstrates stitching of images captured by cameras observing a **planar target**. We analytically derive homographies by assuming the camera pose wrt. to the target are known.
-
-The following image shows views stitched in the green reference camera frame. 
+The code in this repository demonstrates stitching of images captured by cameras observing a **planar target**. We analytically derive homographies by assuming the camera pose wrt. to the target are known. The following image shows views stitched in the green reference camera frame. 
 
 <div style="text-align:center">
 <img src="etc/stitch-cam3.png" />
