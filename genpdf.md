@@ -1,1 +1,0 @@
-pandoc -f markdown+tex_math_dollars README.md -o README.pdf
