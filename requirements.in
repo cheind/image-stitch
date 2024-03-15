@@ -1,0 +1,2 @@
+matplotlib>=3.8.3
+opencv-python-headless>=4.9.0
