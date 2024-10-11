@@ -1,0 +1,5 @@
+# Path to npz file containing raw stitching results
+rawpath: ???
+
+show: True
+save_raw: False

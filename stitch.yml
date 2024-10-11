@@ -1,0 +1,16 @@
+
+# Path to images and calibration
+basepath: data/
+# Number of images to use
+nimages: -1
+mode: camera
+camera:
+  idx: 0
+  extent: [-5000, 5000, -5000, 5000]
+plane:
+  idx: -1
+  extent: [-3, 5, -1, 2]
+  z: 0.0
+  px_per_m: 1000
+show: True
+save_raw: False

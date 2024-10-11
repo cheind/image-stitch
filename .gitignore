@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 tmp/*
+!tmp/__keep__
