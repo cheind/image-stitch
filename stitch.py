@@ -56,7 +56,7 @@ def main():
         t_ref_world = np.linalg.inv(t_world_plane @ t_plane_ref)
         extent = [-3 * px_per_m, 5 * px_per_m, -1 * px_per_m, 2 * px_per_m]
 
-    img_c, K_c, xy_c = ist.stitch(
+    img_c, K_c, xy_c, *_ = ist.stitch(
         imgs,
         K_cam,
         t_cam_world,
