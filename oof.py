@@ -46,30 +46,7 @@ def main():
     ax.set_aspect("equal")
     plt.show()
 
-    # istack = istack.astype(float) / 255.0
-
-    # d = np.sqrt(3) - np.linalg.norm(
-    #     istack - np.array([0, 255, 255]).reshape(1, 1, 1, 3) / 255,
-    #     2,
-    #     axis=-1,
-    #     keepdims=True,
-    # )
-    # d[d < 0.7] = 1e-6
-    # d /= d.sum(0, keepdims=True)
-
-    # final = ((d * istack).sum(0) * 255).astype(np.uint8)
-
-    # fig, ax = plt.subplots(figsize=plt.figaspect(img_c.shape[0] / img_c.shape[1]))
-    # ax.imshow(img_c[..., ::-1], origin="upper")
-    # ax.set_aspect("equal")
-
-    # fig, ax = plt.subplots(figsize=plt.figaspect(img_c.shape[0] / img_c.shape[1]))
-    # ax.imshow(final[..., ::-1], origin="upper")
-    # ax.set_aspect("equal")
-
-    # plt.show()
-
 
 if __name__ == "__main__":
-    # python oof.py -f data/oof -r -1 -px-per-m 1000 -z 0.03
+    # python oof.py rawpath=tmp\stitch-20241011-193007.npz
     main()
