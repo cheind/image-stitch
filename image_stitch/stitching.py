@@ -87,9 +87,9 @@ def stitch(
     fimgs = np.stack(fimgs)
     fweights = np.expand_dims(np.stack(fweights), -1)
     corners = np.stack(corners)
+    K_c = S @ K_ref
 
     img_c = (fimgs / 255.0 * fweights).sum(0) / (fweights.sum(0) + 1e-8)
     img_c = (img_c * 255.0).astype(np.uint8)
-    K_c = S @ K_ref
 
-    return img_c, K_c, corners
+    return img_c, K_c, corners, fimgs, fweights
