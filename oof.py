@@ -21,8 +21,11 @@ def compute_weights_by_color(cfg: OmegaConf, imgs: np.ndarray):
     yellow = np.array([97.17, -21.29, 94.41])
     d = np.linalg.norm(imgs_lab - yellow.reshape(1, 1, 1, 3), axis=-1, keepdims=True)
 
-    tol = 60
-    w = np.exp(-np.maximum((d - tol), 0) * 0.1)
+    tol = 70
+    w = np.exp(-np.maximum((d - tol), 0) * 0.05)
+    w[w < 0.5] = 0
+
+    plt.imshow(w.max(0))
 
     return w
 
@@ -35,15 +38,7 @@ def main():
     imgs = imgs.astype(np.float32) / 255
 
     weights = compute_weights_by_color(cfg, imgs)
-
-    # background
-    imgs = np.concatenate((imgs, np.ones_like(imgs[:1])), 0)
-
-    weights = np.concatenate(
-        (weights, np.clip(1.0 - weights.sum(0, keepdims=True), 0.0, 1.0)), 0
-    )
-
-    weights = weights / weights.sum(0, keepdims=True)
+    weights = weights / (weights.sum(0, keepdims=True) + 1e-12)
 
     out = ((weights * imgs).sum(0) * 255).astype(np.uint8)
     fig, ax = plt.subplots(figsize=plt.figaspect(out.shape[0] / out.shape[1]))
