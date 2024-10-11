@@ -93,15 +93,21 @@ def find_extrinsics(
     mpts = chessboard_points(pattern)
 
     for img in imgs:
-        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-        ret, corners = cv2.findChessboardCornersSB(
-            gray,
-            pattern[:2],
-            flags=cv2.CALIB_CB_ACCURACY
-            | cv2.CALIB_CB_EXHAUSTIVE
-            | cv2.CALIB_CB_NORMALIZE_IMAGE,
-        )
-        if not ret:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        success = False
+        for factor in [1.0, 0.5, 0.25]:
+
+            ret, corners = cv2.findChessboardCornersSB(
+                cv2.resize(gray, None, fx=factor, fy=factor),
+                pattern[:2],
+                flags=cv2.CALIB_CB_EXHAUSTIVE,
+                # | cv2.CALIB_CB_NORMALIZE_IMAGE,
+            )
+            if ret:
+                success = True
+                corners = (corners + 0.5) / factor - 0.5
+                break
+        if not success:
             t_cam_world.append(None)
             continue
 
