@@ -17,6 +17,12 @@ def main():
     parser.add_argument("-n", type=int, help="Use first N images", default=-1)
     parser.add_argument("-f", type=Path, help="Folder", default=Path("data/"))
     parser.add_argument(
+        "-z",
+        type=float,
+        help="Focus plane height (z==0: on ground, z>0: above ground )",
+        default=0.0,
+    )
+    parser.add_argument(
         "-r",
         type=int,
         help="Choose reference camera to stitch in, -1 for plane",
@@ -40,7 +46,7 @@ def main():
     # Setup pi wrt. to world. The used chessboard is 4mm thick,
     # so the pi is essentially offsetted 4mm in +z
     t_world_plane = np.eye(4)
-    t_world_plane[2, 3] = -0.03
+    t_world_plane[2, 3] = 0.004 - args.z
 
     if args.r >= 0:
         # Stitch in physical camera
@@ -76,7 +82,7 @@ def main():
         axis=-1,
         keepdims=True,
     )
-    d[d < 0.8] = 1e-6
+    d[d < 0.7] = 1e-6
     d /= d.sum(0, keepdims=True)
 
     final = ((d * istack).sum(0) * 255).astype(np.uint8)
@@ -93,4 +99,5 @@ def main():
 
 
 if __name__ == "__main__":
+    # python oof.py -f data/oof -r -1 -px-per-m 1000 -z 0.03
     main()
