@@ -1,5 +1,14 @@
 # Path to npz file containing raw stitching results
 rawpath: ???
 
+modes:
+  color:
+    # yellow in L*A*B
+    target_lab: [97.17, -21.29, 94.41]
+    dist_tolerance: 70
+    dist_decay: 0.05
+    min_weight: 0.2
+  default:
+
+mode: color
 show: True
-save_raw: False
