@@ -87,7 +87,7 @@ def main():
         )
         ax.add_patch(patch)
     now = time.strftime("%Y%m%d-%H%M%S")
-    fig.savefig(f"tmp/stitch-{now}.png")
+    fig.savefig(f"tmp/stitch-{now}.png", dpi=300)
     if cfg.show:
         plt.show()
     if cfg.save_raw:
