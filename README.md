@@ -66,7 +66,7 @@ python stitch.py basepath=data/ plane.idx=-1 plane.px_per_m=10 plane.extent="[-3
 
 ### Out-of-Focus (Ducky Rescue)
 
-Frist, stitch in a plane parallel to ground but lifted by 0.03m. We turn on saving of raw values which provides us the necessary information for performing
+First, stitch in a plane parallel to ground but lifted by 0.03m. We turn on saving of raw values which provides us the necessary information for performing
 out-of-focus analysis.
 
 ```shell
@@ -76,8 +76,9 @@ python stitch.py basepath=data/oof plane.idx=-1 plane.extent="[-0.5,1,0,1.5]" pl
 
 ```shell
 # Perform out-of-focus analysis
-python oof.py rawpath=tmp/stitch-20241013-044050.npz color.T=10 integrate.min_weight=0.2
+python oof.py rawpath=tmp/stitch-20241013-044050.npz 
 python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=baseline
 python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=color   
 python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=color color.T=10 integrate.min_weight=0.2
 ```
