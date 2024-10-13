@@ -30,6 +30,10 @@ Focus plane 4mm above ground     |  Focus plane 50cm above ground
 
 As we raise the target or focal plane, the chessboard pattern becomes increasingly distorted and dispersed across the images. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
 
+# Objective
+
+Our objective is to reconstruct the hidden rubber duck as clearly as possible from a set of registered images, enhancing the chances of successful rescue. 
+
 # Method
 
 Our objective is to reconstruct the hidden rubber duck as clearly as possible, enhancing the chances of successful rescue. 
