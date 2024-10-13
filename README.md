@@ -3,7 +3,7 @@
 This repository demonstrates stitching multiple images of a **planar target**. We analytically derive homographies by assuming the camera poses with respect to the target are known. Hence neihter feature matching nor  Linear Transforms (DLTs) are required to estimate the homographies. The following image shows four views stitched in the green reference camera frame. 
 
 <p align="center" width="100%">
-<img src="etc/stitch-cam3.png" />
+<img src="etc/stitch-cam2.png" />
 </p>
 
 In the following image the same scene is stitched in a virtual camera whose image plane aligns with the ground plane, having a pixel resolution of 500px per meter, which is suited well for taking direct metric measurements.
@@ -12,7 +12,7 @@ In the following image the same scene is stitched in a virtual camera whose imag
 <img src="etc/stitch-pi-500.png" />
 </p>
 
-Both images exhibit ghosting artefacts caused by blending moving objects and warping objects that violate the in-target-plane assumption. 
+Both images exhibit ghosting artefacts causved by blending moving objects and warping objects that violate the in-target-plane assumption. 
 
 ## Theory
 
@@ -24,24 +24,29 @@ The code provided is for demonstration purposes only. It is limited to a scenari
 
 ```shell
 # Stitch in camera 3 view (index starting at zero)
-python stitch.py -r 2
+python stitch.py basepath=data/ plane.idx=2
 ```
 
 <p align="center" width="100%">
-<img src="etc/stitch-cam3.png" />
+<img src="etc/stitch-cam2.png" />
 </p>
 
 
 ```shell
 # Stitch in plane pi using px/m of 500
-python stitch.py -r -1 -px-per-m 500
+python stitch.py basepath=data/ plane.idx=-1 plane.px_per_m=500 plane.extent="[-3, 5, -1, 2]"
 ```
 
 ![](etc/stitch-pi-500.png)
 
 ```shell
 # Stitch in plane pi using px/m of 10
-python stitch.py -r -1 -px-per-m 10
+python stitch.py basepath=data/ plane.idx=-1 plane.px_per_m=10 plane.extent="[-3, 5, -1, 2]"
 ```
 
 ![](etc/stitch-pi-10.png)
+
+
+```
+python stitch.py mode=plane basepath=data/oof plane.extent=[-0.5,1,0,1.5] plane.z=0.03 save_raw=true
+``` 
