@@ -65,7 +65,7 @@ We measure the color distance from yellow in the `L*a*b` color space to more clo
 
 If we assume the rubber duck is more often obscured than visible, we can exploit the fact that the duck is underrepresented in the data. 
 
-We compute the raw weights for pixel $i,j$ of view $v$ as
+We compute the weights $w_{ijv}$ for pixel $i,j$ of view $v$ as
 $$
 \begin{aligned}
     g_{ijv} &=(I_{ijv}-\bar{I}_{ij})^2\\
