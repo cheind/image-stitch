@@ -18,6 +18,21 @@ Both images exhibit ghosting artefacts causved by blending moving objects and wa
 
 See [PlanarImageStitching.pdf](PlanarImageStitching.pdf) for background information on the stitching process.
 
+## Applications
+
+The ghosting effect has intriguing applications in search-and-rescue scenarios. In particular, [OutOfFocusAnalysis.md](OutOfFocusAnalysis.md) explores techniques for reconstructing objects that are significantly obscured by out-of-focus elements, providing valuable insights for improving visibility in challenging environments. This allows us to go from 
+
+<div align="center">
+<img src="etc/oof_ducky.jpg" width="60%" />
+</p>
+
+to
+
+<div align="center">
+<img src="etc/oof-color-20241013-082612.png" width="30%" />
+</p>
+
+
 ## Usage
 
 The code provided is for demonstration purposes only. It is limited to a scenario in which a moving camera observes a ground floor. The extrinsics are computed from knowing the fisheye intrinsics/distortions and the calibration pattern configuration.
