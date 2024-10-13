@@ -30,17 +30,15 @@ Focus plane 4mm above ground     |  Focus plane 50cm above ground
 :-------------------------:|:-------------------------:
 ![](etc/oof_stitch_4.png)  |  ![](etc/oof_stitch_500.png)
 
-As we raise the target or focal plane, the chessboard pattern becomes increasingly distorted and dispersed across the images. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
+As we increase the distance of the focal plane the ground the chessboard pattern becomes increasingly distorted dispersed across the integrated stiching image. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
 
 # Objective
 
-Our objective is to reconstruct the hidden rubber duck as clearly as possible from a set of registered images, enhancing the chances of successful rescue. 
+Our goal is to enhance the likelihood of successfully locating and rescuing the rubber duck. By applying the out-of-focus principle to reduce the visibility of the surrounding forest structure, we can improve the reconstruction accuracy of in-focus objects. This increases the probability of detecting the rubber duck hidden beneath the foliage.
 
 # Method
 
-Our objective is to reconstruct the hidden rubber duck as clearly as possible, enhancing the chances of successful rescue. 
-
-Our method follows these steps:
+Our method is comprised of the following steps:
 
 1. **Define a focal plane** where we expect the rubber duck to be located.
 1. **Warp the images** to a virtual camera, with the image plane corresponding to the focal plane chosen in step 1.
