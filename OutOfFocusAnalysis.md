@@ -72,12 +72,13 @@ Given that rubber ducks are predominantly yellow, a natural strategy is to assig
 We measure the color distance from yellow in the `L*a*b` color space to more closely mimic perceptual color differences, as this color space is designed to align with human visual perception. 
 
 We then compute the weights $w_{ijv}$ for pixel $i,j$ of view $v$ and target color $c$ as
-$$
+
+```math
 \begin{aligned}
     g_{ijv} &=d(I^{\textrm{LAB}}_{ijv}, c^{\textrm{LAB}})\\
     w_{ijv} &=\frac{\exp(g_{ijv}/T)}{\sum_k\exp(g_{ijk}/T)},    
 \end{aligned}
-$$
+```
 
 where $I^{\textrm{LAB}}_{ijv}$ is the image of view $v$ in LAB color space and $c^{\textrm{LAB}}$ is the target color in LAB space and $T$ is temperature scaling that allows us to gear the sharpness of the resulting normalization.
 
@@ -86,12 +87,12 @@ where $I^{\textrm{LAB}}_{ijv}$ is the image of view $v$ in LAB color space and $
 If we assume the rubber duck is more often obscured than visible, we can exploit the fact that the duck is underrepresented in the data. 
 
 We compute the weights $w_{ijv}$ for pixel $i,j$ of view $v$ as
-$$
+```math
 \begin{aligned}
     g_{ijv} &=(I^{\textrm{L}}-\bar{I}^{\textrm{L}}_{ij})^2\\
     w_{ijv} &=\frac{\exp(g_{ijv}/T)}{\sum_k\exp(g_{ijk}/T)},    
 \end{aligned}
-$$
+```
 
 where $I^{\textrm{L}}$ is the luminosity image, $\bar{I}^{\textrm{L}}_{ij}$ is the luminosity grayscale value across views, $T$ is temperature scaling that allows us to gear the sharpness of the resulting normalization.
 
