@@ -62,4 +62,7 @@ python stitch.py basepath=data/oof plane.idx=-1 plane.extent="[-0.5,1,0,1.5]" pl
 ```shell
 # Perform out-of-focus analysis
 python oof.py rawpath=tmp/stitch-20241013-044050.npz color.T=10 integrate.min_weight=0.2
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=baseline
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=color   
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier
 ```

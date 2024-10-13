@@ -64,26 +64,39 @@ def main():
     mode_to_fn = {
         "color": weights_from_color,
         "outlier": weights_from_outlier,
-        "default": weights_from_blend_masks,
+        "baseline": weights_from_blend_masks,
     }
     w = mode_to_fn[cfg.weight_filter](cfg, imgs, weights)
     w = np.where(w < cfg.integrate.min_weight, 0.0, w)
 
-    plot_weights(w)
+    # plot_weights(w)
     out = ((w * imgs).sum(0) * 255).astype(np.uint8)
 
     fs = plt.figaspect(out.shape[0] / out.shape[1])
     fig, ax = plt.subplots(figsize=(fs[0] * 2, fs[1] * 2))
     ax.imshow(out[..., ::-1], origin="upper")
+
+    axins = ax.inset_axes(
+        [0.6, 0.1, 0.3, 0.3],
+        xlim=(700, 780),
+        ylim=(650, 730),
+        xticklabels=[],
+        yticklabels=[],
+    )
+    axins.imshow(out[..., ::-1], origin="upper")
+    ax.indicate_inset_zoom(axins, edgecolor="black")
+
     ax.set_aspect("equal")
     now = time.strftime("%Y%m%d-%H%M%S")
-    fig.savefig(f"tmp/oof-{now}.png", dpi=300)
+    fig.tight_layout()
+    fig.savefig(f"tmp/oof-{cfg.weight_filter}-{now}.png", dpi=300)
 
     fig, ax = plt.subplots(figsize=(fs[0] * 2, fs[1] * 2))
     ax.imshow(w.max(0), origin="upper")
     ax.set_aspect("equal")
     now = time.strftime("%Y%m%d-%H%M%S")
-    fig.savefig(f"tmp/oof-weights-{now}.png", dpi=300)
+    fig.tight_layout()
+    fig.savefig(f"tmp/oof-weights-{cfg.weight_filter}-{now}.png", dpi=300)
 
     if cfg.show:
         plt.show()

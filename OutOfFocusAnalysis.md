@@ -48,49 +48,68 @@ Aside from steps 1 and 3, this approach aligns with the default image stitching 
 
 Our rubber duck is approximately 4 cm tall, so we position the focal plane parallel to the ground but shifted upward by about 3 cm to align with the expected height of the duck.
 
-## Integration weights
+## Weighting strategies
 The integration weights determine the relative importance of pixels of each view during integration. By carefully choosing the weights, we increase the probability of spotting the duck. Here we compare three different approaches.
 
 ### Baseline
 
 For the baseline weights, we use the default stitching approach, which generally assigns nearly equal weight to each view for each pixel, except at the image borders where the weights gradually decrease.
 
-### Target Color Prior
+### Target Color Assumption
 
 Given that rubber ducks are predominantly yellow, a natural strategy is to assign greater importance to pixels that are closer in color to yellow, while reducing the weight of pixels that deviate from this hue. 
 
 We measure the color distance from yellow in the `L*a*b` color space to more closely mimic perceptual color differences, as this color space is designed to align with human visual perception. 
 
-### Outlier Prior
+We then compute the weights $w_{ijv}$ for pixel $i,j$ of view $v$ and target color $c$ as
+$$
+\begin{aligned}
+    g_{ijv} &=d(I^{\textrm{LAB}}_{ijv}, c^{\textrm{LAB}})\\
+    w_{ijv} &=\frac{\exp(g_{ijv}/T)}{\sum_k\exp(g_{ijk}/T)},    
+\end{aligned}
+$$
+
+where $I^{\textrm{LAB}}_{ijv}$ is the image of view $v$ in LAB color space and $c^{\textrm{LAB}}$ is the target color in LAB space and $T$ is temperature scaling that allows us to gear the sharpness of the resulting normalization.
+
+### Outlier Assumption
 
 If we assume the rubber duck is more often obscured than visible, we can exploit the fact that the duck is underrepresented in the data. 
 
 We compute the weights $w_{ijv}$ for pixel $i,j$ of view $v$ as
 $$
 \begin{aligned}
-    g_{ijv} &=(I_{ijv}-\bar{I}_{ij})^2\\
+    g_{ijv} &=(I^{\textrm{L}}-\bar{I}^{\textrm{L}}_{ij})^2\\
     w_{ijv} &=\frac{\exp(g_{ijv}/T)}{\sum_k\exp(g_{ijk}/T)},    
 \end{aligned}
 $$
 
-where $I$ is a gray scale image, $\bar{I}$ is the mean grayscale value across views, $T$ is temperature scaling that allows us to gear the sharpness of the resulting normalization.
+where $I^{\textrm{L}}$ is the luminosity image, $\bar{I}^{\textrm{L}}_{ij}$ is the luminosity grayscale value across views, $T$ is temperature scaling that allows us to gear the sharpness of the resulting normalization.
 
 # Evaluation
 
-
+We conduct a brief evaluation of the different weighting strategies and provide a subjective assessment of the results.
 
 ## Baseline
 
-As a baseline we use the standard stitching approach and choose as focal plane the ground plane lifted by 3cm.
+With the baseline weighting strategy, the rubber duck becomes visible, but it appears blurred and mixed with the surrounding leaves, making it easy for an operator to overlook.
 
-## 
+![](etc/oof-baseline-20241013-082545.png)
+
+## Color
+
+For yellow rubber ducks, the color-weighting strategy is highly effective, making the rubber duck stand out clearly against its surroundings.
+
+![](etc/oof-color-20241013-082612.png)
+
+## Outlier
+
+The outlier weighting scheme performs just as effectively as the color-based strategy, but it has the advantage of requiring less prior information to achieve similar results.
+
+![](etc/oof-outlier-20241013-082634.png)
+
+# Future work
 
 
-
-## Principle
-
-## Weights from outliers
-
-## Weights from color
+This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sensing." As such, many advanced strategies have not been covered, including methods like optimizing for locally maximal sharpness or combining multiple stitching planes at various heights to enhance image clarity and accuracy. These techniques offer additional avenues for improving results in more complex scenarios.
 
 # References
