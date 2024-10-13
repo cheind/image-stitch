@@ -1,14 +1,20 @@
-# Path to npz file containing raw stitching results
 rawpath: ???
 
-modes:
-  color:
-    # yellow in L*A*B
-    target_lab: [97.17, -21.29, 94.41]
-    dist_tolerance: 70
-    dist_decay: 0.05
-    min_weight: 0.2
-  default:
+# integration weights from color matching
+color:
+  # yellow in L*A*B color space
+  target_lab: [97.17, -21.29, 94.41]
+  # Temparature scaling of softmax
+  # Larger values increase entropy (-> average)
+  # lower values decrease entropy (-> spiky)
+  T: 10
 
-mode: color
+# integration weights from outlier assumption
+outlier:
+  T: 0.05
+
+integrate:
+  min_weight: 0.0
+
+weight_filter: color
 show: True
