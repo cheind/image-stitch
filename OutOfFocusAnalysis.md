@@ -20,6 +20,8 @@ Here, we present a simplified search-and-rescue scenario. The images below are a
 
 ![](etc/oof_ducky.jpg)
 
+You can download the dataset from [here](https://drive.google.com/file/d/10h1QwlkxLyLN0XluWZdBL7DUDQ0p9CLN/view?usp=sharing).
+
 # Principle
 
 Out-of-focus makes use of the fact that objects not in the focal plane get dispersed during stitching. We illustrate this by comparing two stitching planes. One 4mm above ground (chessboard) and one parallel to it but lifted by 50cm.
