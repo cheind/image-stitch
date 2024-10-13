@@ -30,7 +30,7 @@ Focus plane 4mm above ground     |  Focus plane 50cm above ground
 :-------------------------:|:-------------------------:
 ![](etc/oof_stitch_4.png)  |  ![](etc/oof_stitch_500.png)
 
-As we increase the distance of the focal plane the ground the chessboard pattern becomes increasingly distorted dispersed across the integrated stiching image. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
+As we increase the distance of the target/focal plane to the ground, the chessboard pattern becomes increasingly distorted dispersed across the integrated stiching image. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
 
 # Objective
 
