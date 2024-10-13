@@ -28,23 +28,22 @@ def main():
     t_world_plane = np.eye(4)
     t_world_plane[2, 3] = 0.004
 
-    mode = cfg[cfg.mode]
-    if mode.idx >= 0:
+    if cfg.plane.idx >= 0:
         # Stitch in physical camera
         K_ref = K_cam
-        t_ref_world = t_cam_world[mode.idx]
-        extent = list(mode.extent)
+        t_ref_world = t_cam_world[cfg.plane.idx]
     else:
         # Stitch in virtual camera corresponding to pi
-        px_per_m = mode.px_per_m
+        px_per_m = cfg.plane.px_per_m
         K_ref = np.eye(3)
         K_ref[0, 0] = K_ref[1, 1] = px_per_m
 
         t_plane_ref = np.eye(4)
         t_plane_ref[2, 3] = -1
-        t_world_plane[2, 3] += -mode.z  # -z towards ceiling
+        t_world_plane[2, 3] += -cfg.plane.z  # -z towards ceiling
         t_ref_world = np.linalg.inv(t_world_plane @ t_plane_ref)
-        extent = [i * mode.px_per_m for i in mode.extent]
+
+    extent = [i * cfg.plane.px_per_m for i in cfg.plane.extent]
 
     img_c, K_c, xy_c, w_imgs, w_weights = ist.stitch(
         imgs,
@@ -56,7 +55,8 @@ def main():
         extent=extent,
     )
 
-    fig, ax = plt.subplots(figsize=plt.figaspect(img_c.shape[0] / img_c.shape[1]))
+    w, h = plt.figaspect(img_c.shape[0] / img_c.shape[1])
+    fig, ax = plt.subplots(figsize=(w * 2, h * 2))
     ax.imshow(img_c[..., ::-1], origin="upper")
     ax.set_aspect("equal")
     ax.autoscale(False)
@@ -85,7 +85,8 @@ def main():
         )
         ax.add_patch(patch)
     now = time.strftime("%Y%m%d-%H%M%S")
-    fig.savefig(f"tmp/stitch-{now}.png", dpi=300)
+    fig.savefig(f"tmp/stitch-{now}.png")
+    fig.tight_layout()
     if cfg.show:
         plt.show()
     if cfg.save_raw:
