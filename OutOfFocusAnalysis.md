@@ -133,4 +133,9 @@ python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier outli
 
 This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sensing". We've briefly covered the basic method and evaluated three different weighting strategies on a challenging rubber duck rescue scenario. Many more advanced weighting methods remain unexplored.
 
+## Ideas
+Just ranting some possible improvements
+ - optimize local accutance of the image. use a conv net to inter-relate neighboring pixels.
+ - use multiple target planes at different heights to capture the height of the rubber duck.
+
 # References
