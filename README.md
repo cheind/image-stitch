@@ -20,13 +20,14 @@ See [PlanarImageStitching.pdf](PlanarImageStitching.pdf) for background informat
 
 ## Usage
 
-The code provided is for demonstration purposes only. It is limited to a scenario in which a moving fisheye camera observes a ground floor. The extrinsics are computed from knowing the fisheye intrinsics/distortions and the pattern configuration.
+The code provided is for demonstration purposes only. It is limited to a scenario in which a moving camera observes a ground floor. The extrinsics are computed from knowing the fisheye intrinsics/distortions and the calibration pattern configuration.
+
+### Stitching
 
 ```shell
 # Stitch in camera 3 view (index starting at zero)
 python stitch.py basepath=data/ plane.idx=2
 ```
-
 <p align="center" width="100%">
 <img src="etc/stitch-cam2.png" />
 </p>
@@ -36,17 +37,29 @@ python stitch.py basepath=data/ plane.idx=2
 # Stitch in plane pi using px/m of 500
 python stitch.py basepath=data/ plane.idx=-1 plane.px_per_m=500 plane.extent="[-3, 5, -1, 2]"
 ```
-
-![](etc/stitch-pi-500.png)
+<p align="center" width="100%">
+<img src="etc/stitch-pi-500.png" />
+</p>
 
 ```shell
 # Stitch in plane pi using px/m of 10
 python stitch.py basepath=data/ plane.idx=-1 plane.px_per_m=10 plane.extent="[-3, 5, -1, 2]"
 ```
+<p align="center" width="100%">
+<img src="etc/stitch-pi-10.png" />
+</p>
 
-![](etc/stitch-pi-10.png)
+### Out-of-Focus (Ducky Rescue)
 
+Frist, stitch in a plane parallel to ground but lifted by 0.03m. We turn on saving of raw values which provides us the necessary information for performing
+out-of-focus analysis.
 
-```
-python stitch.py mode=plane basepath=data/oof plane.extent=[-0.5,1,0,1.5] plane.z=0.03 save_raw=true
+```shell
+# Stitch and save intermediate results
+python stitch.py basepath=data/oof plane.idx=-1 plane.extent="[-0.5,1,0,1.5]" plane.z=0.03 save_raw=true
 ``` 
+
+```shell
+# Perform out-of-focus analysis
+python oof.py rawpath=tmp/stitch-20241013-044050.npz color.T=10 integrate.min_weight=0.2
+```
