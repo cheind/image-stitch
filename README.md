@@ -23,7 +23,7 @@ See [PlanarImageStitching.pdf](PlanarImageStitching.pdf) for background informat
 The ghosting effect has intriguing applications in search-and-rescue scenarios. In particular, [OutOfFocusAnalysis.md](OutOfFocusAnalysis.md) explores techniques for reconstructing objects that are significantly obscured by out-of-focus elements, providing valuable insights for improving visibility in challenging environments. This allows us to go from 
 
 <p align="center">
-<img src="etc/ducky.gif" width="60%" />
+<img src="etc/oof_ducky.jpg" width="60%" />
 </p>
 
 to
