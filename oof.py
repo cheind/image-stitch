@@ -1,17 +1,8 @@
-import argparse
 import time
-from glob import glob
 
 import cv2
-import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.path import Path as mplPath
-from mpl_toolkits.axes_grid1 import ImageGrid
-from pathlib import Path
-
-import image_stitch as ist
-
 from omegaconf import OmegaConf
 
 
@@ -36,21 +27,16 @@ def weights_from_color(cfg: OmegaConf, imgs: np.ndarray, weights: np.ndarray):
 
     tgt = np.array(m.target_lab)
     d = np.linalg.norm(imgs_lab - tgt.reshape(1, 1, 1, 3), axis=-1, keepdims=True)
-    print(d.shape[0])
 
     w = np.exp(-np.maximum((d - m.dist_tolerance), 0) * m.dist_decay)
-    w = w / (w.sum(0, keepdims=True) + 1e-12)
-    plot_weights(w)
-    # w[w < m.min_weight] = 0
-
-    plt.show()
+    w += np.random.randn(*d.shape) * 1e-3
+    w = np.where(w == w.max(axis=0, keepdims=True), 1.0, 0.0)
 
     return w
 
 
 def weights_from_blend_masks(cfg: OmegaConf, imgs: np.ndarray, weights: np.ndarray):
     w = weights / (weights.sum(0, keepdims=True) + 1e-12)
-    plot_weights(w)
     return w
 
 
@@ -68,6 +54,7 @@ def main():
         "default": weights_from_blend_masks,
     }
     w = mode_to_fn[cfg.mode](cfg, imgs, weights)
+    plot_weights(w)
     out = ((w * imgs).sum(0) * 255).astype(np.uint8)
 
     fs = plt.figaspect(out.shape[0] / out.shape[1])

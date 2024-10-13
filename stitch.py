@@ -1,15 +1,13 @@
-import argparse
 import time
 from glob import glob
+from pathlib import Path
 
 import cv2
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.path import Path as mplPath
-
 from omegaconf import OmegaConf
-from pathlib import Path
 
 import image_stitch as ist
 
