@@ -46,7 +46,7 @@ Our method is comprised of the following steps:
 1. **Generate the final image** by integrating the pixel values from the warped images, using the computed weights to determine the most reliable information for each pixel position.
 
 
-Aside from steps 1 and 3, this approach aligns with the default image stitching pipeline. 
+Aside from steps 1 and 3, this approach aligns with the default image stitching pipeline as described in [PlanarImageStitching](./PlanarImageStitching.md).
 
 ## Focal plane
 
