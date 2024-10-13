@@ -54,6 +54,10 @@ Aside from steps 1 and 3, this approach aligns with the default image stitching 
 
 Our rubber duck is approximately 4 cm tall, so we position the focal plane parallel to the ground but shifted upward by about 3 cm to align with the expected height of the duck.
 
+```shell
+python stitch.py basepath=data/oof plane.idx=-1 plane.extent="[-0.5,1,0,1.5]" plane.z=0.03 save_raw=true
+```
+
 ## Weighting strategies
 The integration weights determine the relative importance of pixels of each view during integration. By carefully choosing the weights, we increase the probability of spotting the duck. Here we compare three different approaches.
 
@@ -101,17 +105,30 @@ With the baseline weighting strategy, the rubber duck becomes visible, but it ap
 
 ![](etc/oof-baseline-20241013-082545.png)
 
+```shell
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=baseline
+```
+
 ## Color
 
 For yellow rubber ducks, the color-weighting strategy is highly effective, making the rubber duck stand out clearly against its surroundings.
 
 ![](etc/oof-color-20241013-082612.png)
 
+```shell
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=color color.T=10
+```
+
+
 ## Outlier
 
 The outlier weighting scheme performs just as effectively as the color-based strategy, but it has the advantage of requiring less prior information to achieve similar results.
 
 ![](etc/oof-outlier-20241013-082634.png)
+
+```shell
+python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier outlier.T=0.05
+```
 
 # Future work
 
