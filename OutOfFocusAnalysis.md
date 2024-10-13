@@ -113,7 +113,6 @@ The outlier weighting scheme performs just as effectively as the color-based str
 
 # Future work
 
-
-This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sensing." As such, many advanced strategies have not been covered, including methods like optimizing for locally maximal sharpness or combining multiple stitching planes at various heights to enhance image clarity and accuracy. These techniques offer additional avenues for improving results in more complex scenarios.
+This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sensing". We've briefly covered the basic method and evaluated three different weighting strategies on a challenging rubber duck rescue scenario. Many more advanced weighting methods remain unexplored.
 
 # References
