@@ -17,9 +17,11 @@ def main():
     base_path = Path(cfg.basepath)
 
     # Load images, intrinsics and precomputed extrinsics
-    files = sorted(glob(str(base_path / "*.jpg")))[: cfg.nimages]
-    imgs = [cv2.imread(f, cv2.IMREAD_UNCHANGED) for f in files]
     data = np.load(str(base_path / "data.npz"))
+    files = [str(base_path / fname) for fname in data["fnames"]]
+    # files = sorted(glob(str(base_path / "*.jpg")))[: cfg.nimages]
+    imgs = [cv2.imread(f, cv2.IMREAD_UNCHANGED) for f in files]
+
     K_cam = data["K"]
     t_cam_world = data["t_cam_world"][: cfg.nimages]
 

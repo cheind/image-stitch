@@ -11,7 +11,7 @@ def main():
     pattern = (8, 5, 0.068)
     W, H = (5568 // 2, 4872 // 2)
 
-    imgs, K_cam = extrinsics.undistort(
+    imgs, K_cam = extrinsics.undistort_fisheye(
         files, calib["K"], calib["D"], alpha=0.0, outsize=(W, H)
     )
     t_cam_world = extrinsics.find_extrinsics(imgs, K_cam, pattern, reverse=True)
