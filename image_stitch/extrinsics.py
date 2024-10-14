@@ -21,6 +21,41 @@ def undistort(
     files: list[str],
     K: np.ndarray,
     D: np.ndarray,
+    outsize: tuple[int, int] = None,
+    prescalesize: tuple[int, int] = None,
+    openmode: int = cv2.IMREAD_UNCHANGED,
+):
+    "Undistortion for images taken by a pinhole camera"
+
+    imgs = [cv2.imread(f, openmode) for f in files]
+    if prescalesize is not None:
+        imgs = [cv2.resize(i, prescalesize) for i in imgs]
+
+    in_size = imgs[0].shape[:2][::-1]
+
+    if outsize is None:
+        outsize = in_size
+
+    map1, map2 = cv2.initUndistortRectifyMap(K, D, np.eye(3), K, outsize, cv2.CV_32F)
+
+    imgs = [
+        cv2.remap(
+            img,
+            map1,
+            map2,
+            interpolation=cv2.INTER_LINEAR,
+            borderMode=cv2.BORDER_CONSTANT,
+        )
+        for img in imgs
+    ]
+
+    return imgs, K
+
+
+def undistort_fisheye(
+    files: list[str],
+    K: np.ndarray,
+    D: np.ndarray,
     alpha: float = 1.0,
     outsize: tuple[int, int] = None,
 ) -> tuple[list[np.ndarray], np.ndarray]:
