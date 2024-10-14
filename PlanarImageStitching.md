@@ -1,12 +1,7 @@
 
----
-title: "Planar Image Stitching from Analytical Homographies"
-subtitle: "https://github.com/cheind/image-stitch"
-author: "Christoph Heindl"
-date: "2024-03"
-comment: "pandoc -f markdown+tex_math_dollars+yaml_metadata_block+implicit_figures PlanarImageStitching.md -o PlanarImageStitching.pdf"
+# Planar Image Stitching from Analytical Homographies
 
----
+Christoph Heindl, 2024/03, https://github.com/cheind/image-stitch
 
 # Introduction
 
@@ -38,7 +33,7 @@ $$p_\pi=\begin{matrix}[u&v&1]^T\end{matrix}$$
 in the plane $\pi$. Perspectively we can express $p_\pi$  in terms of camera $i$ as
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
 where equality is defined up to scale. Here
-$$
+```math
 U=
 \begin{bmatrix}
     1 & 0 & 0 \\
@@ -46,25 +41,25 @@ U=
     0 & 0 & 0 \\
     0 & 0 & 1
 \end{bmatrix},
-$$
+```
 lifts $p_\pi$ from UV plane coordinates to homogeneous XYZ world space, $T^i_w \in \mathcal{R}^{4x4}$ is the view transform of camera $i$ wrt. world, likewise $T^w_\pi \in \mathcal{R}^{4x4}$ is the location of the plane in world, $K_i \in \mathcal{R}^{3x3}$ is the intrinsic camera matrix and 
-$$ 
+```math
 D=
 \begin{bmatrix}
     1 & 0 & 0 & 0\\
     0 & 1 & 0 & 0\\
     0 & 0 & 1 & 0
 \end{bmatrix}
-$$
+```
 drops the homogeneous fourth coordinate.
 
 When we map the same point $p_\pi$ to camera $i$ and $j$ we get two perspective relations
-$$
+```math
 \begin{aligned}
     p_i &= K_i D T^i_w T^w_\pi U p_\pi \\
     p_j &= K_j D T^j_w T^w_\pi U p_\pi.
 \end{aligned}
-$$
+```
 
 The term $(K_i D T^i_w T^w_\pi U) = L^i_\pi$ represents an invertible 3x3 matrix. This follows from the fact that a) each individual matrix has rank 3 and b) the rank of a matrix product is related to the rank of the individual matrices and c) that a square matrix is invertible if and only if it has full rank. See [rank properties](https://en.wikipedia.org/wiki/Rank_(linear_algebra)#Properties) for details.
 
@@ -110,7 +105,7 @@ In order to stitch in camera $k$ let $T^r_w := T^k_w$ and $K_r:=K_k$ and run the
 When stitching in the target plane, we construct a virtual camera whose image plane aligns with plane $\pi$. In particular we need to construct a suitable view matrix $T^r_w$ and intrinsic matrix $K_r$.
 
 Let $T^r_w =  (T_\pi^w T^\pi_r)^{-1}$ with
-$$
+```math
 T^\pi_r=
 \begin{bmatrix}
     1 & 0 & 0 &  0 \\
@@ -118,18 +113,18 @@ T^\pi_r=
     0 & 0 & 1 & -1 \\
     0 & 0 & 0 & 1
 \end{bmatrix},
-$$
+```
 being the virtual camera frame with respect to plane $\pi$. Here we have chosen the image axes $x,y$ aligned to $u,v$. The camera is offsetted 1 units in negative z, so that the cameras image plane aligns with $\pi$. Note, $z=-1$ and $z=1$ are both possible, but one will give a horizontally flipped image. Which one to choose depends on how the coordinate frame $\pi$ is defined. The flipped image occurs because of a 'see-through' effect.
 
 $K_r$ becomes a pure scaling matrix to account or metric to pixel conversion
-$$
+```math
 K_r=
 \begin{bmatrix}
     R & 0 & 0 \\
     0 & R & 0 \\
     0 & 0 & 1
 \end{bmatrix},
-$$
+```
 where $R=\frac{px}{m}$ is a user defined pixel per meter ratio. Note, here we use meters as metric units, but in fact it should be measured in the same units as your extrinsic matrices.
 
 ### Blending
