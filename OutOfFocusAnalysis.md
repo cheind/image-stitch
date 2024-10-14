@@ -8,15 +8,21 @@ comment: "pandoc -f markdown+tex_math_dollars+yaml_metadata_block+implicit_figur
 bibliography: biblio.bib
 ---
 
+# Exploiting Out-of-Focus Properties in Image Stitching
+Christoph Heindl, 2024/10, https://github.com/cheind/image-stitch
+
+
 # Introduction
 
 In [PlanarImageStitching](./PlanarImageStitching.md), we highlighted the issue of ghosting artifacts that arise during image stitching when the target plane assumption is not met. Objects that do not lie on the assumed target plane can appear misaligned or scattered into inconsistent positions across different viewpoints, leading to visual distortions. 
 
-This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications in areas such as search-and-rescue operations and ground fire detection, where infrared temperature signatures of people or fires may be partially obscured by trees or foliage, allowing for more effective detection despite these visual obstructions [@kurmi2018airborne].
+This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications in areas such as search-and-rescue operations and ground fire detection, where infrared temperature signatures of people or fires may be partially obscured by trees or foliage, allowing for more effective detection despite these visual obstructions[¹].
+
+[¹]: Kurmi, Indrajit, David C. Schedl, and Oliver Bimber. "Airborne optical sectioning." Journal of Imaging 4.8 (2018): 102.
 
 # Scenario
 
-Here, we present a simplified search-and-rescue scenario. The images below are a subset of 17 captured by a 'drone' flying over a forested area (simulated using plants) that conceals a hidden object (a rubber duck). A calibration pattern is included in the scene to facilitate referencing specific viewpoints.
+Here, we present a simplified search-and-rescue scenario. The images shown below are a subset of 17 captured by a 'drone' flying over a forested area (simulated using plants) that conceals a hidden non-moving object (a rubber duck). The viewpoint transformations between images are assumed to be known and have been pre-computed from the visible calibration pattern.
 
 ![](etc/oof_ducky.jpg)
 
@@ -131,7 +137,7 @@ python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier outli
 
 # Future work
 
-This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sensing". We've briefly covered the basic method and evaluated three different weighting strategies on a challenging rubber duck rescue scenario. Many more advanced weighting methods remain unexplored.
+This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sectioning"[¹]. We've briefly covered the basic method and evaluated three different weighting strategies on a challenging rubber duck rescue scenario. Many more advanced weighting methods remain unexplored.
 
 ## Ideas
 Just ranting some possible improvements
