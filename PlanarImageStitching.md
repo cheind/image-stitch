@@ -29,7 +29,9 @@ The output of our algorithm is a composite image $I_c$ and associated intrinsic 
 # Background
 
 Consider a point 
-$$p_\pi=\begin{matrix}[u&v&1]^T\end{matrix}$$ 
+$$
+p_\pi=\begin{matrix}[u&v&1]^T\end{matrix}
+$$ 
 in the plane $\pi$. Perspectively we can express $p_\pi$  in terms of camera $i$ as
 $$p_i = K_i D T^i_w T^w_\pi U p_\pi ,$$
 where equality is defined up to scale. Here
@@ -64,17 +66,17 @@ When we map the same point $p_\pi$ to camera $i$ and $j$ we get two perspective 
 The term $(K_i D T^i_w T^w_\pi U) = L^i_\pi$ represents an invertible 3x3 matrix. This follows from the fact that a) each individual matrix has rank 3 and b) the rank of a matrix product is related to the rank of the individual matrices and c) that a square matrix is invertible if and only if it has full rank. See [rank properties](https://en.wikipedia.org/wiki/Rank_(linear_algebra)#Properties) for details.
 
 Using the invertability property we rearrange the second equation to
-$$
+```math
     (L^j_\pi)^{-1}p_j = L^\pi_j p_j = p_\pi,
-$$
+```
 and substitute for $p_\pi$ in first equation to get
-$$
+```math
     p_i = L^i_\pi L^\pi_j p_j,
-$$
+```
 which relates a pixel in camera $j$ to camera $i$. We define
-$$
+```math
     H_j^i = L^i_\pi L^\pi_j \in \mathcal{R}^{3x3},
-$$
+```
 to be the homography between camera $j$ and $i$.
 
 In the following figure, the left side (a) illustrates the derivation while (b)
