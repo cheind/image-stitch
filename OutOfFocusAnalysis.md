@@ -18,7 +18,8 @@ In [PlanarImageStitching](./PlanarImageStitching.md), we highlighted the issue o
 
 This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications in areas such as search-and-rescue operations and ground fire detection, where infrared temperature signatures of people or fires may be partially obscured by trees or foliage, allowing for more effective detection despite these visual obstructions[¹].
 
-[¹]: Kurmi, Indrajit, David C. Schedl, and Oliver Bimber. "Airborne optical sectioning." Journal of Imaging 4.8 (2018): 102.
+[¹]: Airborne optical sectioning.
+
 
 # Scenario
 
