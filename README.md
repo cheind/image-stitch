@@ -16,7 +16,7 @@ Both images exhibit ghosting artefacts causved by blending moving objects and wa
 
 ## Theory
 
-See [PlanarImageStitching.pdf](PlanarImageStitching.pdf) for background information on the stitching process.
+See [PlanarImageStitching.md](PlanarImageStitching.md) for background information on the stitching process.
 
 ## Applications
 
