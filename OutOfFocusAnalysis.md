@@ -30,6 +30,22 @@ Focus plane 4mm above ground     |  Focus plane 50cm above ground
 
 As we increase the distance of the target/focal plane to the ground, the chessboard pattern becomes increasingly distorted dispersed across the integrated stiching image. In contrast, portions of the plant become more sharply defined in the second image as the focal plane shifts.
 
+# Properties
+
+The amount of 'dispersion' can be quantified by determining the radius of the [circle of confusion](https://en.wikipedia.org/wiki/Circle_of_confusion). For simplicity, we consider two images taken by camera $i$ and $j$ at height $H$ above ground and distance $D$ apart. Additionally we assume the presence of an occluder of height $h$ above ground and focus on the two eye-rays that pass through the occluder.
+
+![](etc/oof_properties.png)
+
+The circle of confusion with radius $r$ represents the lateral displacement of the occluder as imaged by the target plane $\pi$. The larger $r$ the more dispersed the occluder will appear in the integrated image. We aim to maximize $r$ for occluders as it increases the likelihood that later processing will be able to dimish their effects on the integral image.
+
+From basic trigonometry we have
+```math
+r=\tan(\alpha/2)h.
+```
+
+Hence, $r$ is proportional to both $\alpha$ and $h$. That is, for a fixed occluder height $h$ we can maximize &#8593;$r$ by &#8593;$\alpha$ by &#8595;$H$ or &#8593;$D$.
+
+
 # Objective
 
 Our goal is to enhance the likelihood of successfully locating and rescuing the rubber duck. By applying the out-of-focus principle to reduce the visibility of the surrounding forest structure, we can improve the reconstruction accuracy of in-focus objects. This increases the probability of detecting the rubber duck hidden beneath the foliage.
