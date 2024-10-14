@@ -5,9 +5,9 @@ Christoph Heindl, 2024/10, https://github.com/cheind/image-stitch
 
 # Introduction
 
-In [PlanarImageStitching](./PlanarImageStitching.md), we highlighted the issue of ghosting artifacts that arise during image stitching when the target plane assumption is not met. Objects that do not lie on the assumed target plane can appear misaligned or scattered into inconsistent positions across different viewpoints, leading to visual distortions. 
+In [PlanarImageStitching.md](./PlanarImageStitching.md), we highlighted the issue of ghosting artifacts that arise during image stitching when the in-target-plane assumption is not met. Objects that are not positioned on the intended target plane will appear misaligned, scattered, and lack opacity in the resulting integrated image.
 
-This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications in areas such as search-and-rescue operations and ground fire detection, where infrared temperature signatures of people or fires may be partially obscured by trees or foliage, allowing for more effective detection despite these visual obstructions[^1].
+This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications  in search-and-rescue and ground fire detection, where thermal/infrared signatures can be obscured by trees or foliage. By placing the target plane near the ground (in-focus), trees and foliage (out-of-focsu) have less impact on the integrated image, improving detection rates despite visual obstructions.[^1].
 
 [^1]: Kurmi, Indrajit, David C. Schedl, and Oliver Bimber. "Airborne optical sectioning." Journal of Imaging 4.8 (2018): 102.
 
