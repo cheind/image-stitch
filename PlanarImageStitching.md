@@ -155,5 +155,5 @@ To detect the boundaries of the composite image $I_c$ the bounding box of the tr
 The current code assumes a single moving camera with shared intrinsics.
 
 ## Ghosting
-Moving and out-of plane objects cause ghosting artefacts due to the blending approach taken.
+Moving and out-of plane objects cause ghosting artefacts due to the blending approach taken. Suprisingly, this effect can be exploited to facilitate search and rescue scenarios. Read more about this in [OutOfFocusAnalysis.md](OutOfFocusAnalysis.md).
 
