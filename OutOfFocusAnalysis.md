@@ -5,18 +5,20 @@ Christoph Heindl, 2024/10, https://github.com/cheind/image-stitch
 
 # Introduction
 
-In [PlanarImageStitching.md](./PlanarImageStitching.md), we highlighted the issue of ghosting artifacts that arise during image stitching when the in-target-plane assumption is not met. Objects that are not positioned on the intended target plane will appear misaligned, scattered, and lack opacity in the resulting integrated image.
+In [PlanarImageStitching.md](./PlanarImageStitching.md), we highlighted the issue of ghosting artifacts that arise during image stitching when the in-target-plane assumption is not met. Objects that protrude from the target plane will appear misaligned, scattered, and lack opacity in the resulting integrated image.
 
-This effect can be exploited to enhance visibility of in-focus objects that are heavily occluded by out-of-focus ones. This technique has valuable applications  in search-and-rescue and ground fire detection, where thermal/infrared signatures can be obscured by trees or foliage. By placing the target plane near the ground (in-focus), trees and foliage (out-of-focsu) have less impact on the integrated image, improving detection rates despite visual obstructions.[^1].
+Surprisingly, exploiting this artifact can create see-through effects that enhance the visibility of in-focus objects, even when they are significantly obscured by out-of-focus elements. This technique is particularly valuable in search-and-rescue operations and ground fire detection, where RGB or thermal signals may be obscured by trees or foliage. For instance, placing the target plane near the ground (in-focus) reduces the impact of trees and foliage (out-of-focus) on the integrated image, enhancing detection rates despite visual obstructions[^1].
 
 [^1]: Kurmi, Indrajit, David C. Schedl, and Oliver Bimber. "Airborne optical sectioning." Journal of Imaging 4.8 (2018): 102.
 
 
 # Scenario
 
-Here, we present a simplified search-and-rescue scenario. The images shown below are a subset of 17 captured by a 'drone' flying over a forested area (simulated using plants) that conceals a hidden non-moving object (a rubber duck). The viewpoint transformations between images are assumed to be known and have been pre-computed from the visible calibration pattern.
+Here, we consider a simplified search-and-rescue scenario. The RGB images shown below are a subset of 17 captured by a 'drone' flying over a forested area (simulated using plants) that conceals a hidden non-moving object (a rubber duck). 
 
 ![](etc/oof_ducky.jpg)
+
+The camera is assumed to be calibrated and viewpoint transformations between images are assumed to be known and have been pre-computed from the visible calibration pattern. The ground plane is parallel to the plane induced by the chessboard pattern, but shifted down by the thickness of the board.
 
 You can download the dataset from [here](https://drive.google.com/file/d/10h1QwlkxLyLN0XluWZdBL7DUDQ0p9CLN/view?usp=sharing).
 
@@ -67,6 +69,8 @@ Aside from steps 1 and 3, this approach aligns with the default image stitching 
 Our rubber duck is approximately 4 cm tall, so we position the focal plane parallel to the ground but shifted upward by about 3 cm to align with the expected height of the duck.
 
 ```shell
+# Perform stitching and save intermediate results. 
+# This generates 'tmp/stitch-<DATA>-<TIME>.npz'
 python stitch.py basepath=data/oof plane.idx=-1 plane.extent="[-0.5,1,0,1.5]" plane.z=0.03 save_raw=true
 ```
 
@@ -119,7 +123,9 @@ With the baseline weighting strategy, the rubber duck becomes visible, but it ap
 ![](etc/oof-baseline-20241013-082545.png)
 
 ```shell
-python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=baseline
+# Integrate intermediate results by baseline method
+# Generates tmp/oof-weights-baseline-<DATE>-<TIME>.png
+python oof.py rawpath=tmp/stitch-<DATA>-<TIME>.npz weight_filter=baseline
 ```
 
 ## Color
@@ -129,7 +135,9 @@ For yellow rubber ducks, the color-weighting strategy is highly effective, makin
 ![](etc/oof-color-20241013-082612.png)
 
 ```shell
-python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=color color.T=10
+# Integrate intermediate results by color weighting
+# Generates tmp/oof-weights-color-<DATE>-<TIME>.png
+python oof.py rawpath=tmp/stitch-<DATA>-<TIME>.npz  weight_filter=color color.T=10
 ```
 
 
@@ -140,16 +148,20 @@ The outlier weighting scheme performs just as effectively as the color-based str
 ![](etc/oof-outlier-20241013-082634.png)
 
 ```shell
-python oof.py rawpath=tmp/stitch-20241013-044050.npz weight_filter=outlier outlier.T=0.05
+# Integrate intermediate results by outlier weighting
+# Generates tmp/oof-weights-outlier-<DATE>-<TIME>.png
+python oof.py rawpath=tmp/stitch-<DATA>-<TIME>.npz weight_filter=outlier outlier.T=0.05
 ```
 
 # Future work
 
 This work is intended as an introductory text on the topic of out-of-focus analysis, also known as "Airborne Optical Sectioning"[¹]. We've briefly covered the basic method and evaluated three different weighting strategies on a challenging rubber duck rescue scenario. Many more advanced weighting methods remain unexplored.
 
+<!-- 
 ## Ideas
 Just ranting some possible improvements
  - optimize local accutance of the image. use a conv net to inter-relate neighboring pixels.
  - use multiple target planes at different heights to capture the height of the rubber duck.
+ -->
 
 # References
